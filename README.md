@@ -155,3 +155,89 @@ Wir freuen uns über Beiträge zu diesem Projekt! Weitere Details findest du in 
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe [LICENSE](LICENSE) für weitere Details.
 
+
+
+# 📬 Omnixys Notification Service
+
+Der **Omnixys Notification Service** ist ein zentraler Microservice innerhalb von **OmnixysSphere**, der für den Versand von E-Mails und Benachrichtigungen zuständig ist. Er verarbeitet Kafka-Events wie `notification.user.updated`, `notification.account.deleted` etc., nutzt ein flexibles Template-System und ist vollständig mit Keycloak, Observability-Tools und MongoDB integriert.
+
+> 🔒 Gesichert mit Keycloak · 🔎 Vollständig observierbar · ⚙️ Ereignisgesteuert via Kafka
+
+---
+
+## 📦 Features
+
+* ✉️ E-Mail-Versand mit Mailjet
+* 🧹 Vorlagen mit Platzhaltern aus MongoDB
+* 🔐 Rollenbasierter Zugriff via Keycloak
+* 📊 OpenTelemetry Tracing (Tempo)
+* 📈 Prometheus Metriken (`/metrics`)
+* 📋 JSON-Logging mit Kafka-Weiterleitung (`logs.notification`)
+* 📡 Kafka-Consumer für CRUD-Events (User, Account, etc.)
+* 🔌 Port: `7402` (gemäß [Port-Konvention](../port-konvention.md))
+
+---
+
+## 🚀 Quickstart
+
+```bash
+git clone https://github.com/omnixys/omnixys-notification-service.git
+cd omnixys-notification-service
+pip install -r requirements.txt
+uvicorn src.fastapi_app:app --host 0.0.0.0 --port 7402
+```
+
+> Alternativ: `docker-compose up` (empfohlen für vollständiges Ökosystem)
+
+---
+
+## ⚙️ Tech Stack
+
+* **Framework:** FastAPI
+* **Datenbank:** MongoDB
+* **Auth:** Keycloak
+* **Messaging:** Kafka
+* **Monitoring:** Prometheus, Tempo (OpenTelemetry), Grafana
+* **Mail Provider:** Mailjet
+* **Logging:** LoggerPlus mit Kafka-Anbindung
+
+---
+
+## 🔁 Kafka Topics (Beispiele)
+
+| Topic                          | Beschreibung                              |
+| ------------------------------ | ----------------------------------------- |
+| `notification.user.updated`    | Versendet E-Mail bei Profilaktualisierung |
+| `notification.account.deleted` | E-Mail bei Account-Löschung               |
+| `notification.*`               | Erweiterbar für alle relevanten Events    |
+
+---
+
+## 🧪 Test & Qualität
+
+```bash
+pytest --cov=src
+```
+
+> Ziel: ≥ 80 % Testabdeckung. Codequalität via `ruff`, `mypy`, `coverage`.
+
+---
+
+## 🤝 Contributing
+
+Siehe [CONTRIBUTING.md](../CONTRIBUTING.md) für Konventionen, Branch-Strategien und Pull-Request-Regeln.
+
+---
+
+## 🔐 Sicherheit
+
+Sicherheitslücken bitte an [security@omnixys.com](mailto:security@omnixys.com) melden – **nicht öffentlich posten.**
+
+---
+
+## 📄 Lizenz
+
+[GNU General Public License v3.0](./LICENSE)
+© 2025 [Omnixys – The Fabric of Modular Innovation](https://omnixys.com)
+
+---
