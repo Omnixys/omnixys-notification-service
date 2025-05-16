@@ -11,8 +11,8 @@ export const KafkaTopics = {
     system: {
         shutdownAll: 'system.shutdown',
     },
-    activity: {
-        log: 'activity.notification.log',
+    logstream: {
+        log: 'logstream.log.notification',
     }
 } as const;
 

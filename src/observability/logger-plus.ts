@@ -125,7 +125,7 @@ export class LoggerPlus {
                     };
 
                     await this.#kafka.sendEvent(
-                        KafkaTopics.activity.log,
+                        KafkaTopics.logstream.log,
                         'log',
                         logPayload,
                         this.#serviceName,
