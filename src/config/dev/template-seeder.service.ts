@@ -12,15 +12,16 @@ export class TemplateSeederService implements OnModuleInit {
   readonly #templateReadService: TemplateReadService;
   readonly #templateWriteService: TemplateWriteService;
 
-      constructor(
-        templateReadService: TemplateReadService,
-        templateWriteService: TemplateWriteService,
-      ) {
-        this.#templateReadService = templateReadService;
-        this.#templateWriteService = templateWriteService;
-      }
+  constructor(
+    templateReadService: TemplateReadService,
+    templateWriteService: TemplateWriteService,
+  ) {
+    this.#templateReadService = templateReadService;
+    this.#templateWriteService = templateWriteService;
+  }
 
   async onModuleInit(): Promise<void> {
+    console.log('🚀 TemplateSeederService gestartet');
     await this.#seedTemplates();
   }
 

@@ -17,55 +17,47 @@ import { MailerService } from '../services/mailer.service.js';
 @UseFilters(HttpExceptionFilter)
 @UseInterceptors(ResponseTimeInterceptor)
 export class NotificationResolver {
-    readonly #logger = getLogger(NotificationResolver.name);
-    readonly #keycloakService: KeycloakService;
-    readonly #mailerService: MailerService;
+  readonly #logger = getLogger(NotificationResolver.name);
+  readonly #keycloakService: KeycloakService;
+  readonly #mailerService: MailerService;
 
-    constructor(
-        keycloakservice: KeycloakService,
-        mailerService: MailerService
-    ) {
-        this.#keycloakService = keycloakservice;
-        this.#mailerService = mailerService;
+  constructor(keycloakservice: KeycloakService, mailerService: MailerService) {
+    this.#keycloakService = keycloakservice;
+    this.#mailerService = mailerService;
+  }
+
+  @Mutation(() => Boolean)
+  @Roles({ roles: ['Admin'] })
+  async sendMail(@Args('input') input: SendMailInput): Promise<boolean> {
+    const placeholders = Object.fromEntries(
+      input.placeholders.map((p) => [p.key, p.value]),
+    );
+
+    await this.#mailerService.sendMail(
+      input.templateType,
+      input.toEmail,
+      input.toName,
+      placeholders,
+    );
+
+    return true;
+  }
+
+  @Query(() => String)
+  @Roles({ roles: ['Admin', 'User'] })
+  async healthCheck(@Context() context: any) {
+    try {
+      const { username } = await this.#keycloakService.getToken(context);
+      this.#logger.debug('healthCheck: username=%s', username);
+      return 'NotificationService OK';
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Fehler:', error.message);
+        throw new Error('Fehler beim Senden: ' + error.message);
+      } else {
+        console.error('Unbekannter Fehler:', error);
+        throw new Error('Unbekannter Fehler aufgetreten');
+      }
     }
-
-    @Mutation(() => Boolean)
-    @Roles({ roles: ['Admin'] })
-    async sendMail(
-        @Args('input') input: SendMailInput,
-    ): Promise<boolean> {
-        const placeholders = Object.fromEntries(
-            input.placeholders.map(p => [p.key, p.value])
-        );
-
-        await this.#mailerService.sendMail(
-            input.templateType,
-            input.toEmail,
-            input.toName,
-            placeholders
-        );
-
-        return true;
-    }
-
-    @Query(() => String)
-    @Roles({ roles: ['Admin', 'User'] })
-    async healthCheck(
-        @Context() context: any,
-    ) {
-        try {
-            const { username } = await this.#keycloakService.getToken(context);
-            this.#logger.debug('healthCheck: username=%s', username);
-            return 'NotificationService OK';
-        } catch (error) {
-            if (error instanceof Error) {
-                console.error('Fehler:', error.message);
-                throw new Error('Fehler beim Senden: ' + error.message);
-            } else {
-                console.error('Unbekannter Fehler:', error);
-                throw new Error('Unbekannter Fehler aufgetreten');
-            }
-
-        }
-    }
+  }
 }

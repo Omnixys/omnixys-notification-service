@@ -6,11 +6,14 @@ import { TemplateSeederService } from './template-seeder.service.js';
 import { NotificationModule } from '../../notification/notification.module.js';
 import { entities } from '../../template/models/entities/entities.entity.js';
 
-
 @Module({
-  imports: [KeycloakModule, MongooseModule.forFeature(entities), NotificationModule],
+  imports: [
+    KeycloakModule,
+    MongooseModule.forFeature(entities),
+    NotificationModule,
+  ],
   controllers: [DevController],
   providers: [TemplateSeederService],
-  exports: [TemplateSeederService,],
+  exports: [TemplateSeederService],
 })
 export class DevModule {}

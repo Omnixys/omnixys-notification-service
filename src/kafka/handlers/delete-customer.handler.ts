@@ -9,22 +9,20 @@ import { SendMailDTO } from '../../template/models/events/send.event.js';
 @KafkaEvent(KafkaTopics.customer.customerDeleted)
 @Injectable()
 export class DeletedCustomerHandler implements KafkaEventHandler {
-    readonly #notificationWriteService: MailerService;
-    readonly #logger = getLogger(DeletedCustomerHandler.name);
+  readonly #notificationWriteService: MailerService;
+  readonly #logger = getLogger(DeletedCustomerHandler.name);
 
-    constructor(
-        mailerService: MailerService,
-    ) {
-        this.#notificationWriteService = mailerService;
-    }
+  constructor(mailerService: MailerService) {
+    this.#notificationWriteService = mailerService;
+  }
 
-    async handle(data: SendMailDTO): Promise<void> {
-        this.#logger.debug('CreateShoppingCartHandler: data=%o', data);
+  async handle(data: SendMailDTO): Promise<void> {
+    this.#logger.debug('CreateShoppingCartHandler: data=%o', data);
 
-        await this.#notificationWriteService.sendMailUsingTemplate(
-            "USER_DELETED_FULLY",
-            data.email,
-            data.placeholders
-        );
-    }
+    await this.#notificationWriteService.sendMailUsingTemplate(
+      'USER_DELETED_FULLY',
+      data.email,
+      data.placeholders,
+    );
+  }
 }

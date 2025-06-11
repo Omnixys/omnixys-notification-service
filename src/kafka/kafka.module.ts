@@ -12,28 +12,27 @@ import { CreateCustomerHandler } from './handlers/create-customer-handler.js';
 import { DeletedCustomerHandler } from './handlers/delete-customer.handler.js';
 import { ShutdownHandler } from './handlers/shutdown.handler.js';
 
-
 @Module({
-    imports: [
-        DiscoveryModule,
-        forwardRef(() => NotificationModule),
-        forwardRef(() => ObservabilityModule),
-    ],
-    providers: [
-        KafkaProducerService,
-        KafkaConsumerService,
-        KafkaEventDispatcherService,
-        KafkaHeaderBuilder,
+  imports: [
+    DiscoveryModule,
+    forwardRef(() => NotificationModule),
+    forwardRef(() => ObservabilityModule),
+  ],
+  providers: [
+    KafkaProducerService,
+    KafkaConsumerService,
+    KafkaEventDispatcherService,
+    KafkaHeaderBuilder,
 
-        // Kafka-Handler
-        CreateCustomerHandler,
-        DeletedCustomerHandler,
-        ShutdownHandler,
-        // AccountCreatedHandler,
-        // AccountDeletedHandler,
-        // ShoppingCartCreatedHandler,
-        // ShoppingCartDeletedHandler,
-    ],
-    exports: [KafkaProducerService, KafkaConsumerService],
+    // Kafka-Handler
+    CreateCustomerHandler,
+    DeletedCustomerHandler,
+    ShutdownHandler,
+    // AccountCreatedHandler,
+    // AccountDeletedHandler,
+    // ShoppingCartCreatedHandler,
+    // ShoppingCartDeletedHandler,
+  ],
+  exports: [KafkaProducerService, KafkaConsumerService],
 })
-export class KafkaModule { }
+export class KafkaModule {}

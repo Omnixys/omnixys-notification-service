@@ -17,19 +17,8 @@ import { KafkaModule } from '../kafka/kafka.module.js';
  * Die dekorierte Modul-Klasse mit den Service-Klassen.
  */
 @Module({
-    imports: [
-        KafkaModule,
-        KeycloakModule,
-        TemplateModule,
-        ObservabilityModule,
-    ],
-    providers: [
-        MailerService,
-        NotificationResolver,
-    ],
-    exports: [
-        MailerService,
-        NotificationResolver,
-    ],
+  imports: [KafkaModule, KeycloakModule, TemplateModule, ObservabilityModule],
+  providers: [MailerService, NotificationResolver],
+  exports: [MailerService, NotificationResolver],
 })
-export class NotificationModule { }
+export class NotificationModule {}

@@ -7,26 +7,26 @@ import { TraceContext } from '../../observability/trace-context.util.js';
  */
 @InputType()
 export class SendTemplateMailInput {
-    @Field()
-    to!: string;
+  @Field()
+  to!: string;
 
-    @Field()
-    type!: string;
+  @Field()
+  type!: string;
 
-    @Field(() => String, { nullable: true })
-    traceId?: string;
+  @Field(() => String, { nullable: true })
+  traceId?: string;
 
-    @Field(() => String, { nullable: true })
-    spanId?: string;
+  @Field(() => String, { nullable: true })
+  spanId?: string;
 
-    @Field(() => String, { nullable: true })
-    service?: string;
+  @Field(() => String, { nullable: true })
+  service?: string;
 
-    @Field(() => Object)
-    placeholders!: Record<string, string>;
+  @Field(() => Object)
+  placeholders!: Record<string, string>;
 
-    /**
-     * Interne TraceContext-Weitergabe (nicht in GraphQL sichtbar).
-     */
-    traceContext?: TraceContext;
+  /**
+   * Interne TraceContext-Weitergabe (nicht in GraphQL sichtbar).
+   */
+  traceContext?: TraceContext;
 }

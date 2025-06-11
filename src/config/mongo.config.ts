@@ -13,8 +13,13 @@ import { env } from './env.js';
 
 // Extrahieren relevanter Umgebungsvariablen
 // eslint-disable-next-line @stylistic/operator-linebreak
-const { NODE_ENV, MONGO_DB_URI, MONGO_DB_DATABASE, TEST_MONGO_DB_URI, TEST_MONGO_DB_DATABASE } =
-    env;
+const {
+  NODE_ENV,
+  MONGO_DB_URI,
+  MONGO_DB_DATABASE,
+  TEST_MONGO_DB_URI,
+  TEST_MONGO_DB_DATABASE,
+} = env;
 
 let mongoDatabaseUri: string | undefined;
 let mongoDatabaseName: string | undefined;
@@ -31,31 +36,40 @@ let mongoDatabaseName: string | undefined;
  * const uri = ensureEnvironmentVariableDefined(process.env.MONGO_DB_URI, 'MONGO_DB_URI');
  */
 export function ensureEnvironmentVariableDefined(
-    variable: string | undefined,
-    variableName: string,
+  variable: string | undefined,
+  variableName: string,
 ): string {
-    if (variable === undefined) {
-        throw new Error(
-            `Die Umgebungsvariable ${variableName} ist nicht definiert. Bitte prüfe deine .env-Datei.`,
-        );
-    }
-    return variable;
+  if (variable === undefined) {
+    throw new Error(
+      `Die Umgebungsvariable ${variableName} ist nicht definiert. Bitte prüfe deine .env-Datei.`,
+    );
+  }
+  return variable;
 }
 
 // Umgebungsabhängige Konfiguration
 if (NODE_ENV === 'test') {
-    // Für die Testumgebung
-    mongoDatabaseUri = ensureEnvironmentVariableDefined(TEST_MONGO_DB_URI, 'TEST_MONGO_DB_URI');
-    mongoDatabaseName = TEST_MONGO_DB_DATABASE;
-    if (mongoDatabaseName === undefined) {
-        throw new Error(
-            'Die Umgebungsvariable TEST_MONGO_DB_DATABASE ist nicht definiert. Bitte prüfe deine .env-Datei.',
-        );
-    }
+  // Für die Testumgebung
+  mongoDatabaseUri = ensureEnvironmentVariableDefined(
+    TEST_MONGO_DB_URI,
+    'TEST_MONGO_DB_URI',
+  );
+  mongoDatabaseName = TEST_MONGO_DB_DATABASE;
+  if (mongoDatabaseName === undefined) {
+    throw new Error(
+      'Die Umgebungsvariable TEST_MONGO_DB_DATABASE ist nicht definiert. Bitte prüfe deine .env-Datei.',
+    );
+  }
 } else {
-    // Für andere Umgebungen (z.B. Produktion)
-    mongoDatabaseUri = ensureEnvironmentVariableDefined(MONGO_DB_URI, 'MONGO_DB_URI');
-    mongoDatabaseName = ensureEnvironmentVariableDefined(MONGO_DB_DATABASE, 'MONGO_DB_DATABASE');
+  // Für andere Umgebungen (z.B. Produktion)
+  mongoDatabaseUri = ensureEnvironmentVariableDefined(
+    MONGO_DB_URI,
+    'MONGO_DB_URI',
+  );
+  mongoDatabaseName = ensureEnvironmentVariableDefined(
+    MONGO_DB_DATABASE,
+    'MONGO_DB_DATABASE',
+  );
 }
 
 // Sicherstellen, dass die Variablen validiert sind
@@ -76,6 +90,6 @@ const validatedMongoDatabaseName: string = mongoDatabaseName;
  * console.log(database.databaseUri);  // Ausgabe der Verbindungs-URI
  */
 export const database = {
-    databaseName: validatedMongoDatabaseName,
-    databaseUri: validatedMongoDatabaseUri,
+  databaseName: validatedMongoDatabaseName,
+  databaseUri: validatedMongoDatabaseUri,
 } as const;

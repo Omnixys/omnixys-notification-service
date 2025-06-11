@@ -16,6 +16,7 @@ const {
   TEST_MONGO_DB_URI,
   TEST_MONGO_DB_DATABASE,
   HTTPS,
+  TEMPO_URI,
 } = process.env;
 
 export const env = {
@@ -30,6 +31,7 @@ export const env = {
   TEST_MONGO_DB_URI,
   TEST_MONGO_DB_DATABASE,
   HTTPS,
+  TEMPO_URI,
 } as const;
 
 console.debug('NODE_ENV = %s', NODE_ENV);

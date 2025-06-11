@@ -7,7 +7,5 @@ import { KAFKA_EVENT_METADATA } from '../interface/kafka-event.interface.js';
  * @param eventName Name des Kafka-Events (z. B. 'notification.user.created')
  */
 export const KafkaEvent = (eventName: string): ClassDecorator => {
-    return SetMetadata(KAFKA_EVENT_METADATA, eventName);
+  return SetMetadata(KAFKA_EVENT_METADATA, eventName);
 };
-
-

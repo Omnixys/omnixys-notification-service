@@ -1,7 +1,6 @@
-
 import { env } from './env.js';
 import { resolve } from 'node:path';
-import { config } from './notification.js';
+import { config } from './app.js';
 import pino from 'pino';
 import { PrettyOptions } from 'pino-pretty';
 

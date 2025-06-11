@@ -18,28 +18,34 @@ Der **GentleCorp-Order-Service** ist ein zentraler Bestandteil des **GentleCorp-
 ## Anforderungen
 
 ### Systemanforderungen
+
 - Node.js Version 18 oder höher
 - NPM Version 9 oder höher
 
 ### Installation
 
 1. Repository klonen:
+
    ```bash
-   git clone https://github.com/GentleCorp/gentlecorp-order-service.git
-   cd gentlecorp-order-service
+   git clone https://github.com/GentleCorp/omnixys-order-service.git
+   cd omnixys-order-service
    ```
 
 2. Abhängigkeiten installieren:
+
    ```bash
    npm install
    ```
 
 3. Umgebungsvariablen konfigurieren:
    Erstelle eine `.env`-Datei basierend auf `.env.example`:
+
    ```bash
    cp .env.example .env
    ```
+
    Beispiel-Variablen:
+
    ```
    PORT=3000
    DATABASE_URL=mongodb://localhost:27017/orders
@@ -55,6 +61,7 @@ Der **GentleCorp-Order-Service** ist ein zentraler Bestandteil des **GentleCorp-
 ## API-Endpunkte
 
 ### Basis-URL
+
 ```
 http://localhost:3000/api/orders
 ```
@@ -62,22 +69,23 @@ http://localhost:3000/api/orders
 ### Verfügbare Endpunkte
 
 1. **GET** `/orders`
+
    - Beschreibung: Liste aller Bestellungen abrufen.
    - Query-Parameter: `status` (optional) - Filter nach Status.
 
 2. **POST** `/orders`
+
    - Beschreibung: Neue Bestellung erstellen.
    - Body:
      ```json
      {
        "username": "string",
-       "items": [
-         { "productId": "string", "quantity": 1 }
-       ]
+       "items": [{ "productId": "string", "quantity": 1 }]
      }
      ```
 
 3. **PATCH** `/orders/:id`
+
    - Beschreibung: Eine bestehende Bestellung aktualisieren.
    - Body:
      ```json
@@ -94,6 +102,7 @@ http://localhost:3000/api/orders
 ## Entwicklung
 
 ### Skripte
+
 - **Starten der Anwendung**:
   ```bash
   npm run start
@@ -108,6 +117,7 @@ http://localhost:3000/api/orders
   ```
 
 ### Architektur
+
 - **Controller**: Handhabt HTTP-Anfragen und leitet sie an die entsprechenden Services weiter.
 - **Service**: Enthält die Business-Logik.
 - **Repository**: Schnittstelle zur Datenbank.
@@ -127,18 +137,22 @@ npm run test
 ## Docker
 
 ### Docker-Setup
+
 1. Baue das Docker-Image:
+
    ```bash
-   docker build -t gentlecorp-order-service .
+   docker build -t omnixys-order-service .
    ```
 
 2. Starte den Container:
    ```bash
-   docker run -d -p 3000:3000 gentlecorp-order-service
+   docker run -d -p 3000:3000 omnixys-order-service
    ```
 
 ### Docker Compose
+
 Alternativ kannst du Docker Compose nutzen:
+
 ```bash
 docker-compose up
 ```
@@ -155,8 +169,6 @@ Wir freuen uns über Beiträge zu diesem Projekt! Weitere Details findest du in 
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe [LICENSE](LICENSE) für weitere Details.
 
-
-
 # 📬 Omnixys Notification Service
 
 Der **Omnixys Notification Service** ist ein zentraler Microservice innerhalb von **OmnixysSphere**, der für den Versand von E-Mails und Benachrichtigungen zuständig ist. Er verarbeitet Kafka-Events wie `notification.user.updated`, `notification.account.deleted` etc., nutzt ein flexibles Template-System und ist vollständig mit Keycloak, Observability-Tools und MongoDB integriert.
@@ -167,14 +179,14 @@ Der **Omnixys Notification Service** ist ein zentraler Microservice innerhalb vo
 
 ## 📦 Features
 
-* ✉️ E-Mail-Versand mit Mailjet
-* 🧹 Vorlagen mit Platzhaltern aus MongoDB
-* 🔐 Rollenbasierter Zugriff via Keycloak
-* 📊 OpenTelemetry Tracing (Tempo)
-* 📈 Prometheus Metriken (`/metrics`)
-* 📋 JSON-Logging mit Kafka-Weiterleitung (`logs.notification`)
-* 📡 Kafka-Consumer für CRUD-Events (User, Account, etc.)
-* 🔌 Port: `7402` (gemäß [Port-Konvention](../port-konvention.md))
+- ✉️ E-Mail-Versand mit Mailjet
+- 🧹 Vorlagen mit Platzhaltern aus MongoDB
+- 🔐 Rollenbasierter Zugriff via Keycloak
+- 📊 OpenTelemetry Tracing (Tempo)
+- 📈 Prometheus Metriken (`/metrics`)
+- 📋 JSON-Logging mit Kafka-Weiterleitung (`logs.notification`)
+- 📡 Kafka-Consumer für CRUD-Events (User, Account, etc.)
+- 🔌 Port: `7402` (gemäß [Port-Konvention](../port-konvention.md))
 
 ---
 
@@ -193,13 +205,13 @@ uvicorn src.fastapi_app:app --host 0.0.0.0 --port 7402
 
 ## ⚙️ Tech Stack
 
-* **Framework:** FastAPI
-* **Datenbank:** MongoDB
-* **Auth:** Keycloak
-* **Messaging:** Kafka
-* **Monitoring:** Prometheus, Tempo (OpenTelemetry), Grafana
-* **Mail Provider:** Mailjet
-* **Logging:** LoggerPlus mit Kafka-Anbindung
+- **Framework:** FastAPI
+- **Datenbank:** MongoDB
+- **Auth:** Keycloak
+- **Messaging:** Kafka
+- **Monitoring:** Prometheus, Tempo (OpenTelemetry), Grafana
+- **Mail Provider:** Mailjet
+- **Logging:** LoggerPlus mit Kafka-Anbindung
 
 ---
 

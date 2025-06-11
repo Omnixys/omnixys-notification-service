@@ -13,7 +13,7 @@ import { TemplateSeederService } from './template-seeder.service.js';
 
 /**
  * Entwicklungs-Controller zum gezielten Auslösen von Dev-Funktionen wie Datenbank-Seeding.
- * Zugriff nur für Benutzer mit Rolle `gentlecorp-admin`.
+ * Zugriff nur für Benutzer mit Rolle `omnixys-admin`.
  */
 @Controller('admin')
 @UseGuards(AuthGuard)
@@ -24,12 +24,12 @@ export class DevController {
 
   constructor(service: TemplateSeederService) {
     this.#service = service;
-   }
+  }
 
   /**
    * Führt das Seeding der Notification-Templates manuell aus.
    * Wird typischerweise im Development/Testumfeld genutzt.
-   * 
+   *
    * Route: POST /admin/db_populate
    */
   @Post('db_populate')

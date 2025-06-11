@@ -9,22 +9,20 @@ import { SendMailDTO } from '../../template/models/events/send.event.js';
 @KafkaEvent(KafkaTopics.customer.customerCreated)
 @Injectable()
 export class CreateCustomerHandler implements KafkaEventHandler {
-    readonly #notificationWriteService: MailerService;
-    readonly #logger = getLogger(CreateCustomerHandler.name);
+  readonly #notificationWriteService: MailerService;
+  readonly #logger = getLogger(CreateCustomerHandler.name);
 
-    constructor(
-        mailerService: MailerService,
-    ) {
-        this.#notificationWriteService = mailerService;
-    }
+  constructor(mailerService: MailerService) {
+    this.#notificationWriteService = mailerService;
+  }
 
-    async handle(data: SendMailDTO): Promise<void> {
-        this.#logger.debug('CreateShoppingCartHandler: data=%o', data);
+  async handle(data: SendMailDTO): Promise<void> {
+    this.#logger.debug('CreateShoppingCartHandler: data=%o', data);
 
-        await this.#notificationWriteService.sendMailUsingTemplate(
-            "USER_CREATED_WITH_CART_AND_ACCOUNT",
-            data.email,
-            data.placeholders
-        );
-    }
+    await this.#notificationWriteService.sendMailUsingTemplate(
+      'USER_CREATED_WITH_CART_AND_ACCOUNT',
+      data.email,
+      data.placeholders,
+    );
+  }
 }
