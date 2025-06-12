@@ -44,7 +44,7 @@ export async function startOtelSDK() {
     .merge(detected)
     .merge(
       resourceFromAttributes({
-        'service.name': 'shopping-cart-service',
+        'service.name': 'notification-service',
       }),
     );
 
