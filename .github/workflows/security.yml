@@ -117,23 +117,23 @@ jobs:
 
       - name: Docker Scout Quickview
         id: docker-scout-quickview
-        uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
+        uses: docker/scout-action@v1
         with:
           command: quickview
           image: "${{ env.IMAGE_NAME }}:latest"
   
       - name: Docker Scout CVEs
         id: docker-scout-cves
-        uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
+        uses: docker/scout-action@v1
         with:
           command: cves
           image: "${{ env.IMAGE_NAME }}:latest"
-          summary: true
 
-      - name: ls -al
+      - name: Check saved files
         run: |
           ls -al
-          cat docker-scout-cves.md || echo "Datei nicht gefunden"
+          cat docker-scout-quickview.md || echo "quickview fehlt"
+          cat docker-scout-cves.md || echo "cves fehlt"
 
       - name: Save Docker Scout Reports
         run: |
@@ -141,10 +141,11 @@ jobs:
           echo "${{ steps.docker-scout-cves.outputs.cves }}" > docker-scout-cves.md
         continue-on-error: true
 
-      - name: ls -al
+      - name: Check saved files
         run: |
           ls -al
-          cat docker-scout-cves.md || echo "Datei nicht gefunden"
+          cat docker-scout-quickview.md || echo "quickview fehlt"
+          cat docker-scout-cves.md || echo "cves fehlt"
 
       - name: Upload Docker Scout Reports
         uses: actions/upload-artifact@v4
