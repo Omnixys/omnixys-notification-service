@@ -45,9 +45,6 @@ jobs:
   snyk:
     name: "Security-Snyk-Scan-${{ vars.CURRENT_DATE }}"
     runs-on: ubuntu-latest
-    env:
-      CURRENT_DATE: ${{ vars.CURRENT_DATE }}
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -111,9 +108,6 @@ jobs:
   docker-scout:
     name: "Security-Docker-Scout-${{ vars.CURRENT_DATE }}"
     runs-on: ubuntu-latest
-    env:
-      CURRENT_DATE: ${{ vars.CURRENT_DATE }}
-
     steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -126,14 +120,19 @@ jobs:
         uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
         with:
           command: quickview
-          image: "${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}"
+          image: "${{ env.IMAGE_NAME }}:latest"
   
       - name: Docker Scout CVEs
         id: docker-scout-cves
         uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
         with:
           command: cves
-          image: "${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}"
+          image: "${{ env.IMAGE_NAME }}:latest"
+
+
+      - name: ls -al
+        run: |
+          ls -al
 
       - name: Save Docker Scout Reports
         run: |
