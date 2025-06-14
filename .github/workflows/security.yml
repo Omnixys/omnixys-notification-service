@@ -140,11 +140,12 @@ jobs:
       - name: ls -al
         run: |
           ls -al
+          cat docker-scout-cves.md || echo "Datei nicht gefunden"
 
-      - name: Save Docker Scout Reports
-        run: |
-          echo "${{ steps.docker-scout-quickview.outputs.quickview }}" > docker-scout-quickview.md
-          echo "${{ steps.docker-scout-cves.outputs.cves }}" > docker-scout-cves.md
+      # - name: Save Docker Scout Reports
+      #   run: |
+      #     echo "${{ steps.docker-scout-quickview.outputs.quickview }}" > docker-scout-quickview.md
+      #     echo "${{ steps.docker-scout-cves.outputs.cves }}" > docker-scout-cves.md
 
       - name: Upload Docker Scout Reports
         uses: actions/upload-artifact@v4
