@@ -123,17 +123,17 @@ jobs:
 
       - name: Docker Scout Quickview
         id: docker-scout-quickview
-        uses: docker/scout-action@v1
+        uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
         with:
           command: quickview
-          image: "${{ env.IMAGE_NAME }}:latest"
-
+          image: "${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}"
+  
       - name: Docker Scout CVEs
         id: docker-scout-cves
-        uses: docker/scout-action@v1
+        uses: docker/scout-action@0133ff88fe16d4a412dc4827a8fccbccb6b583e0
         with:
           command: cves
-          image: "${{ env.IMAGE_NAME }}:latest"
+          image: "${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}"
 
       - name: Save Docker Scout Reports
         run: |
