@@ -14,8 +14,11 @@ env:
 
 jobs:
   dependency-check:
-    name: "Security-Dependency-Check-${{ vars.CURRENT_DATE }}"
+    name: "Security-Dependency-Check-${{ matrix.node-version }}-${{ vars.CURRENT_DATE }}"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [23.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 23.x
+          node-version: ${{ matrix.node-version }}
           cache: npm
 
       - name: Install dependencies
@@ -43,8 +46,11 @@ jobs:
           path: ./reports
 
   snyk:
-    name: "Security-Snyk-Scan-${{ vars.CURRENT_DATE }}"
+    name: "Security-Snyk-Scan-${{ matrix.node-version }}-${{ vars.CURRENT_DATE }}"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [23.x]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -52,7 +58,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 23.x
+          node-version: ${{ matrix.node-version }}
           cache: npm
 
       - name: Install dependencies
@@ -117,35 +123,23 @@ jobs:
 
       - name: Docker Scout Quickview
         id: docker-scout-quickview
-        uses: docker/scout-action@v1
+        uses: docker/scout-action@v1.18.1
         with:
           command: quickview
           image: "${{ env.IMAGE_NAME }}:latest"
-  
+
       - name: Docker Scout CVEs
         id: docker-scout-cves
-        uses: docker/scout-action@v1
+        uses: docker/scout-action@v1.18.1
         with:
           command: cves
           image: "${{ env.IMAGE_NAME }}:latest"
-
-      - name: Check saved files
-        run: |
-          ls -al
-          cat docker-scout-quickview.md || echo "quickview fehlt"
-          cat docker-scout-cves.md || echo "cves fehlt"
 
       - name: Save Docker Scout Reports
         run: |
           echo "${{ steps.docker-scout-quickview.outputs.quickview }}" > docker-scout-quickview.md
           echo "${{ steps.docker-scout-cves.outputs.cves }}" > docker-scout-cves.md
         continue-on-error: true
-
-      - name: Check saved files
-        run: |
-          ls -al
-          cat docker-scout-quickview.md || echo "quickview fehlt"
-          cat docker-scout-cves.md || echo "cves fehlt"
 
       - name: Upload Docker Scout Reports
         uses: actions/upload-artifact@v4
