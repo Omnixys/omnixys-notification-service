@@ -128,14 +128,7 @@ jobs:
         with:
           command: cves
           image: "${{ env.IMAGE_NAME }}:latest"
-
-
-      - name: Run Docker Scout Quickview and Save
-        run: tee docker-scout-quickview.md
-  
-      - name: Run Docker Scout CVEs and Save
-        run: tee docker-scout-cves.md
-
+          summary: true
 
       - name: ls -al
         run: |
